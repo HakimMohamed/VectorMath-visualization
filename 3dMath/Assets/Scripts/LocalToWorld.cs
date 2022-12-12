@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class LocalToWorld : MonoBehaviour
 {
-    public Vector2 localSpacePoint = new Vector2(2, 1);
+    //public Vector2 localSpacePoint;
+    [SerializeField]public Transform localObjTransform;
+    public Vector2 worldSpacePoint;
+
     void OnDrawGizmos()
     {
         Vector2 objPos = transform.position;
@@ -17,14 +20,25 @@ public class LocalToWorld : MonoBehaviour
             return (Vector2)transform.position + WorldOffset;
         }
 
-        Vector2 WorldSpacePoint = localToWorld(localSpacePoint);
+        Vector2 worldToLocal(Vector2 worldPt)
+        {
+            Vector2 relPoint = worldPt - objPos;
+
+            float x = Vector2.Dot(relPoint, right);
+            float y = Vector2.Dot(relPoint, up);
+
+            return new Vector2(x, y);
+        }
+
+        //Vector2 WorldSpacePoint = localToWorld(localSpacePoint);
 
         drawBasisVector(transform.position, transform.right, transform.up);
         drawBasisVector(Vector2.zero, Vector2.right, Vector2.up);
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(WorldSpacePoint, .1f);
+        Gizmos.DrawSphere(worldSpacePoint, .1f);
 
+        localObjTransform.localPosition = worldToLocal(worldSpacePoint);
     }
 
 
