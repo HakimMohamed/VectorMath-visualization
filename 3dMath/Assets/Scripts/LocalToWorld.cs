@@ -14,14 +14,17 @@ public class LocalToWorld : MonoBehaviour
         Vector2 right = transform.right;
         Vector2 up = transform.up;
 
-        Vector2 localToWorld(Vector2 localPt)
-        {
-            Vector2 WorldOffset = right * localPt.x + up * localPt.y;
-            return (Vector2)transform.position + WorldOffset;
-        }
+        //Vector2 localToWorld(Vector2 localPt)
+        //{
+        //    //return transform.TransformPoint(localPt);
+        //    Vector2 WorldOffset = right * localPt.x + up * localPt.y;
+        //    return (Vector2)transform.position + WorldOffset;
+        //}
 
         Vector2 worldToLocal(Vector2 worldPt)
         {
+            //return transform.InverseTransformPoint(worldPt);
+
             Vector2 relPoint = worldPt - objPos;
 
             float x = Vector2.Dot(relPoint, right);
